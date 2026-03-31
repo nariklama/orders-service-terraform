@@ -83,30 +83,6 @@ data "aws_iam_policy_document" "analytics_bucket_policy" {
     }
   }
 
-  # Allow orders-service role full access
-  statement {
-    sid    = "AllowOrdersServiceRole"
-    effect = "Allow"
-
-    principals {
-      type        = "AWS"
-      identifiers = [var.orders_service_role_arn]
-    }
-
-    actions = [
-      "s3:GetObject",
-      "s3:PutObject",
-      "s3:DeleteObject",
-      "s3:ListBucket",
-      "s3:GetBucketLocation",
-    ]
-
-    resources = [
-      aws_s3_bucket.analytics.arn,
-      "${aws_s3_bucket.analytics.arn}/*",
-    ]
-  }
-
   # Enforce HTTPS only
   statement {
     sid    = "DenyNonHTTPS"
